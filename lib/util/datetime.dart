@@ -24,7 +24,7 @@ DateTime? _parseRfc822DateTime(String dateString) {
     }
 
     var pattern = rfc822DateOnlyPattern;
-    if (dateString.contains(RegExp('(0?[1-9]|1[0-2]):[0-5][0-9]:[0-5][0-9]'))) {
+    if (dateString.contains(RegExp('(0?[1-9]|1[0-2]|2[0-3]):[0-5][0-9]:[0-5][0-9]'))) {
       pattern = rfc822DatePattern;
     } else if (dateString.contains(RegExp('(0?[1-9]|1[0-2]):[0-5][0-9]'))) {
       pattern = rfc822DateWithoutSecondsPattern;
