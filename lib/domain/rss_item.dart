@@ -1,6 +1,7 @@
 import 'package:webfeed_revised/domain/dublin_core/dublin_core.dart';
 import 'package:webfeed_revised/domain/itunes/itunes.dart';
 import 'package:webfeed_revised/domain/media/media.dart';
+import 'package:webfeed_revised/domain/media/thumbnail.dart';
 import 'package:webfeed_revised/domain/rss_category.dart';
 import 'package:webfeed_revised/domain/rss_content.dart';
 import 'package:webfeed_revised/domain/rss_enclosure.dart';
@@ -14,22 +15,22 @@ import 'package:xml/xml.dart';
 /// See https://www.rssboard.org/rss-specification#hrelementsOfLtitemgt
 class RssItem {
   /// Default constructor for the RssItem class
-  RssItem({
-    this.title,
-    this.description,
-    this.link,
-    this.categories,
-    this.guid,
-    this.pubDate,
-    this.author,
-    this.comments,
-    this.source,
-    this.content,
-    this.media,
-    this.enclosure,
-    this.dc,
-    this.itunes,
-  });
+  RssItem(
+      {this.title,
+      this.description,
+      this.link,
+      this.categories,
+      this.guid,
+      this.pubDate,
+      this.author,
+      this.comments,
+      this.source,
+      this.content,
+      this.media,
+      this.enclosure,
+      this.dc,
+      this.itunes,
+      this.thumbnails});
 
   /// Parse constructor for the RssItem class, used when 'parsing' a feed
   factory RssItem.parse(XmlElement element) => RssItem(
@@ -56,6 +57,10 @@ class RssItem {
             .firstOrNull,
         dc: DublinCore.parse(element),
         itunes: Itunes.parse(element),
+        thumbnails: element
+            .findElements('media:thumbnail')
+            .map(Thumbnail.parse)
+            .toList(),
       );
 
   /// The title of the item
@@ -99,4 +104,6 @@ class RssItem {
 
   /// The Itunes of the item
   final Itunes? itunes;
+
+  final List<Thumbnail?>? thumbnails;
 }
