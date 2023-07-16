@@ -1,7 +1,6 @@
 import 'package:webfeed_revised/domain/dublin_core/dublin_core.dart';
 import 'package:webfeed_revised/domain/itunes/itunes.dart';
 import 'package:webfeed_revised/domain/media/media.dart';
-import 'package:webfeed_revised/domain/media/thumbnail.dart';
 import 'package:webfeed_revised/domain/rss_category.dart';
 import 'package:webfeed_revised/domain/rss_content.dart';
 import 'package:webfeed_revised/domain/rss_enclosure.dart';
@@ -30,7 +29,7 @@ class RssItem {
       this.enclosure,
       this.dc,
       this.itunes,
-      this.thumbnails});
+      this.thumbnailUrl});
 
   /// Parse constructor for the RssItem class, used when 'parsing' a feed
   factory RssItem.parse(XmlElement element) => RssItem(
@@ -57,8 +56,7 @@ class RssItem {
             .firstOrNull,
         dc: DublinCore.parse(element),
         itunes: Itunes.parse(element),
-        thumbnails:
-            element.findElements('thumbnail').map(Thumbnail.parse).toList(),
+        thumbnailUrl: element.findElements('thumbnail:url').firstOrNull?.text,
       );
 
   /// The title of the item
@@ -103,5 +101,5 @@ class RssItem {
   /// The Itunes of the item
   final Itunes? itunes;
 
-  final List<Thumbnail?>? thumbnails;
+  final String? thumbnailUrl;
 }
