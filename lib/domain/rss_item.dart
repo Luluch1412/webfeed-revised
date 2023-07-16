@@ -56,7 +56,12 @@ class RssItem {
             .firstOrNull,
         dc: DublinCore.parse(element),
         itunes: Itunes.parse(element),
-        thumbnailUrl: element.findElements('thumbnail:url').firstOrNull?.text,
+        thumbnailUrl: element
+            .findElements('thumbnail')
+            .firstOrNull
+            ?.findElements('url')
+            .firstOrNull
+            ?.text,
       );
 
   /// The title of the item
