@@ -57,10 +57,8 @@ class RssItem {
             .firstOrNull,
         dc: DublinCore.parse(element),
         itunes: Itunes.parse(element),
-        thumbnails: element
-            .findElements('media:thumbnail')
-            .map(Thumbnail.parse)
-            .toList(),
+        thumbnails:
+            element.findElements('thumbnail').map(Thumbnail.parse).toList(),
       );
 
   /// The title of the item
